@@ -1,14 +1,13 @@
 <?php
-//确保在连接客户端时不会超时
 set_time_limit(0);
 
-//加载公共方法
+//load common tools
 include_once('./Tools/Utils.class.php');
 
-//加载配置文件
+//load cnofig file
 $config=include_once('./Config/Config.class.php');
 
-//加载核心类Core
+//load Core Class
 autoload('./Core/Server.class.php');
 
 Server::run();

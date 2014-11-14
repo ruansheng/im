@@ -43,14 +43,13 @@ class Server{
 				echo "socket_accept() failed: reason: " . socket_strerror($msgsock) . "\n";
 				break;
 			} else {
-				//发到客户端
-				$msg ="测试成功！\n";
+				//send to client 
+				$msg ="yes !\n";
 				socket_write($msgsock, $msg, strlen($msg));
 		
-				echo "测试成功了啊\n";
 				$buf = socket_read($msgsock,8192);
 		
-				$talkback = "收到的信息:$buf\n";
+				$talkback = "message:$buf\n";
 				echo $talkback;
 		
 				if(++$count >= 5){
@@ -69,14 +68,14 @@ class Server{
 		$ip=self::$config['SERVER_ADDRESS'];
 		$port=self::$config['SERVER_PORT'];
 		if(($sock = socket_create(AF_INET,SOCK_STREAM,SOL_TCP)) < 0) {
-			echo "socket_create() 失败的原因是:".socket_strerror($sock)."\n";
+			echo "socket_create() fail reason:".socket_strerror($sock)."\n";
 		}
 		
 		if(($ret = socket_bind($sock,$ip,$port)) < 0) {
-			echo "socket_bind() 失败的原因是:".socket_strerror($ret)."\n";
+			echo "socket_bind() fail reason:".socket_strerror($ret)."\n";
 		}
 		if(($ret = socket_listen($sock,4)) < 0) {
-			echo "socket_listen() 失败的原因是:".socket_strerror($ret)."\n";
+			echo "socket_listen() fail reason:".socket_strerror($ret)."\n";
 		}
 		
 		self::$handler=$sock;
