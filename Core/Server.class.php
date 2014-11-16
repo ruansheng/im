@@ -6,16 +6,10 @@
 class Server{
 	
 	/**
-	 * Socket handler
-	 * @var resource
+	 * $handler
+	 * @var mixed
 	 */
-	private static $handler='';
-	
-	/**
-	 * Config 
-	 * @var array
-	 */
-	private static $config=array();
+	private static $handler;
 	
 	/**
 	 * Welcome UI
@@ -32,7 +26,7 @@ class Server{
 	 */
 	public static function run(){
 		self::welcome();
-		self::createSocket();
+		self::$handler=Socket::createSocket();
 		self::loop();
 	}
 	
@@ -62,22 +56,4 @@ class Server{
 		socket_close(self::$handler);
 	}
 	
-	public function createSocket(){
-		Global $config;
-		self::$config=$config;
-		$ip=self::$config['SERVER_ADDRESS'];
-		$port=self::$config['SERVER_PORT'];
-		if(($sock = socket_create(AF_INET,SOCK_STREAM,SOL_TCP)) < 0) {
-			echo "socket_create() fail reason:".socket_strerror($sock)."\n";
-		}
-		
-		if(($ret = socket_bind($sock,$ip,$port)) < 0) {
-			echo "socket_bind() fail reason:".socket_strerror($ret)."\n";
-		}
-		if(($ret = socket_listen($sock,4)) < 0) {
-			echo "socket_listen() fail reason:".socket_strerror($ret)."\n";
-		}
-		
-		self::$handler=$sock;
-	}
 }
