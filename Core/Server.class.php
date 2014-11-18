@@ -31,29 +31,18 @@ class Server{
 	}
 	
 	public static function loop(){
-		$count = 0;
 		do {
 			if (($msgsock = socket_accept(self::$handler)) < 0) {
 				echo "socket_accept() failed: reason: " . socket_strerror($msgsock) . "\n";
 				break;
 			} else {
 				//send to client 
-				$msg ="yes !\n";
-				socket_write($msgsock, $msg, strlen($msg));
-		
-				$buf = socket_read($msgsock,8192);
-		
-				$talkback = "message:$buf\n";
-				echo $talkback;
-		
-				if(++$count >= 5){
-					break;
-				}
 			}
-			socket_close($msgsock);
+			
+			Socket::closeSocketConnect($msgsock);
 		} while (true);
 			
-		socket_close(self::$handler);
+		Socket::closeSocketServer(self::$handler);
 	}
 	
 }

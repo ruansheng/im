@@ -32,15 +32,31 @@ class Socket{
 	/**
 	 * 接收内容
 	 */
-	public static function receiveSocketContent(){
-	
+	public static function receiveSocketContent($msgsock){
+		$buf = socket_read($msgsock,8192);
 	}
 	
 	/**
 	 * 发送内容
 	 */
-	public static function sendSocketContent(){
-		
+	public static function sendSocketContent($msgsock,$msg){
+		socket_write($msgsock, $msg, strlen($msg));
+	}
+	
+	/**
+	 * 关闭Socket
+	 * @param mixed $handler
+	 */
+	public static function closeSocketConnect($msgsock){
+		socket_close($msgsock);
+	}
+	
+	/**
+	 * 关闭Socket Server
+	 * @param mixed $handler
+	 */
+	public static function closeSocketServer($handler){
+		socket_close($handler);
 	}
 	
 }
